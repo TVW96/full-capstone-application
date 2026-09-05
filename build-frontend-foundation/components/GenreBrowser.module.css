@@ -1,0 +1,106 @@
+.browser {
+  margin-block-start: var(--space-5);
+}
+
+.selectionBar {
+  display: flex;
+  justify-content: space-evenly;
+  gap: var(--space-2);
+  margin-block-end: var(--space-5);
+  padding: var(--space-2);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-full);
+}
+
+.selectionBar button {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  color: var(--sys-color-text-muted);
+  background: transparent;
+  border: 0;
+  border-radius: var(--sys-radius-full);
+  cursor: pointer;
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+}
+
+.selectionBar button:hover,
+.selectionBar button:focus-visible {
+  color: var(--sys-color-accent);
+}
+
+.selectionBar .active {
+  color: var(--sys-color-on-accent);
+  background: var(--sys-color-accent);
+}
+
+.selectionBar button:focus-visible {
+  outline: 2px solid var(--sys-color-focus);
+  outline-offset: 2px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(8rem, 15rem) 1fr;
+  gap: var(--space-5);
+  align-items: center;
+  min-block-size: 15rem;
+  padding: var(--space-5);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-lg);
+}
+
+.cover {
+  display: grid;
+  aspect-ratio: 3 / 4;
+  place-items: center;
+  color: var(--sys-color-on-primary);
+  background: var(--sys-color-primary);
+  border-radius: var(--sys-radius-md);
+  font-size: 4rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.volume,
+.item h3,
+.item p:last-child {
+  margin: 0;
+}
+
+.volume {
+  color: var(--sys-color-accent);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.item h3 {
+  margin-block: var(--space-2);
+  font-size: var(--font-size-xl);
+}
+
+.item p:last-child {
+  color: var(--sys-color-text-muted);
+}
+
+@media (max-width: 40rem) {
+  .selectionBar {
+    flex-wrap: wrap;
+    border-radius: var(--sys-radius-lg);
+  }
+
+  .selectionBar button {
+    flex-basis: 28%;
+  }
+
+  .item {
+    grid-template-columns: 6rem 1fr;
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  .cover {
+    font-size: 2rem;
+  }
+}

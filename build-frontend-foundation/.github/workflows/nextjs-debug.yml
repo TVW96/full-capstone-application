@@ -1,0 +1,84 @@
+name: Next.js build + diagnostics (npm)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-diagnostics-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Show environment
+        run: |
+          echo "=== Working dir ==="
+          pwd
+          echo "=== Node / npm versions ==="
+          node -v
+          npm -v
+          echo "=== package.json ==="
+          cat package.json
+          echo "=== top-level files ==="
+          ls -la
+
+      - name: Detect app router / Server Actions
+        run: |
+          if [ -d "app" ]; then
+            echo "::warning ::Found 'app/' directory (App Router) — may use server-only features."
+          fi
+          if grep -R --line-number --no-messages --include='*.ts' --include='*.tsx' "use server" app components lib || true; then
+            echo "::warning ::Found 'use server' in repository — Server Actions or server-only code may be present and are incompatible with static export."
+          else
+            echo "No 'use server' directives found (quick check)."
+          fi
+
+      - name: Install dependencies (npm)
+        run: |
+          npm ci --loglevel=error
+
+      - name: Show installed top-level deps
+        run: |
+          echo "=== installed (top-level) ==="
+          npm ls --depth=0 || true
+
+      - name: Run build (capture logs)
+        shell: bash
+        run: |
+          set -o pipefail
+          echo "Starting next build..."
+          # Save full build output to build.log and stream to console
+          npm run build 2>&1 | tee build.log
+          status=${PIPESTATUS[0]}
+          echo "Build exit status: $status"
+          if [ $status -ne 0 ]; then
+            echo "::error ::next build failed (status $status) — build.log uploaded as artifact for inspection"
+            exit $status
+          fi
+          echo "next build succeeded."
+
+      - name: Upload build log
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+
+      - name: Upload .next (if present)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-build-output
+          path: .next

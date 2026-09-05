@@ -1,0 +1,797 @@
+.accountPage {
+  min-block-size: calc(100vb - 8rem);
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      var(--sys-color-primary-container),
+      transparent 24rem
+    ),
+    var(--sys-color-canvas);
+}
+
+.accountHero {
+  position: relative;
+  overflow: hidden;
+  color: var(--sys-color-on-utility);
+  background: var(--sys-color-utility-deep);
+}
+
+.accountHero::after {
+  position: absolute;
+  inset: -8rem -4rem auto auto;
+  inline-size: 24rem;
+  aspect-ratio: 1;
+  border: 1px solid oklch(100% 0 0 / 13%);
+  border-radius: var(--sys-radius-full);
+  box-shadow:
+    0 0 0 4rem oklch(100% 0 0 / 3%),
+    0 0 0 8rem oklch(100% 0 0 / 2%);
+  content: "";
+  pointer-events: none;
+}
+
+.heroInner,
+.accountContent {
+  inline-size: min(100%, 78rem);
+  margin-inline: auto;
+  padding-inline: var(--layout-gutter);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-5);
+  padding-block: var(--space-7);
+}
+
+.avatarButton {
+  position: relative;
+  display: block;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--sys-radius-full);
+  cursor: pointer;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  inline-size: clamp(5.5rem, 11vw, 8.5rem);
+  aspect-ratio: 1;
+  color: var(--sys-color-on-primary-container);
+  background-color: var(--ref-color-evergreen-200);
+  background-position: center;
+  background-size: cover;
+  border: 0.3rem solid oklch(100% 0 0 / 88%);
+  border-radius: var(--sys-radius-full);
+  box-shadow: var(--sys-shadow-lg);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.avatarEditOverlay {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  inset: 0;
+  color: white;
+  background: oklch(16% 0.025 160 / 72%);
+  border: 0.3rem solid transparent;
+  border-radius: var(--sys-radius-full);
+  font-size: var(--font-size-xl);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.avatarButton:hover .avatarEditOverlay,
+.avatarButton:focus-visible .avatarEditOverlay {
+  opacity: 1;
+}
+
+.avatarButton:focus-visible {
+  outline: 0.2rem solid var(--ref-color-evergreen-200);
+  outline-offset: 0.2rem;
+}
+
+.identity > p,
+.sectionHeading p,
+.dangerZone p,
+.modalHeader p {
+  margin: 0;
+  color: var(--sys-color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.identity > p {
+  color: var(--ref-color-evergreen-200);
+}
+
+.identity h1 {
+  margin: var(--space-1) 0 var(--space-2);
+  color: var(--sys-color-on-utility);
+  font-size: var(--font-size-3xl);
+  letter-spacing: -0.05em;
+}
+
+.identityMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  color: var(--sys-color-on-utility-muted);
+  font-size: var(--font-size-sm);
+}
+
+.identityMeta span + span::before {
+  margin-inline-end: var(--space-4);
+  color: var(--ref-color-evergreen-200);
+  content: "•";
+}
+
+.heroEditButton,
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: 2.9rem;
+  padding: var(--space-2) var(--space-4);
+  color: var(--sys-color-utility-deep);
+  background: var(--sys-color-on-utility);
+  border: 1px solid var(--sys-color-on-utility);
+  border-radius: var(--sys-radius-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.accountContent {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--space-5);
+  padding-block: var(--space-6) var(--space-8);
+}
+
+.pageNotice {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  color: var(--sys-color-on-primary-container);
+  background: var(--sys-color-primary-container);
+  border-inline-start: 0.24rem solid var(--sys-color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.bioSection,
+.detailsSection,
+.addressSection,
+.dangerZone {
+  padding: var(--space-5);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-md);
+  box-shadow: var(--sys-shadow-sm);
+}
+
+.bioSection {
+  align-self: start;
+}
+
+.detailsSection {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.addressSection,
+.dangerZone {
+  grid-column: 1 / -1;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-block-end: var(--space-4);
+}
+
+.sectionHeading h2,
+.dangerZone h2,
+.modalHeader h2 {
+  margin: var(--space-1) 0 0;
+  font-size: var(--font-size-xl);
+  letter-spacing: -0.035em;
+}
+
+.iconButton,
+.textButton,
+.cardActions button,
+.closeButton {
+  color: var(--sys-color-primary);
+  background: transparent;
+  border: 0;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  inline-size: 2.5rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-full);
+  font-size: var(--font-size-lg);
+}
+
+.bioCopy {
+  min-block-size: 7rem;
+  margin: 0;
+  color: var(--sys-color-text-muted);
+  line-height: var(--line-height-body);
+  white-space: pre-wrap;
+}
+
+.bioEditor {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.bioEditor textarea {
+  inline-size: 100%;
+  min-block-size: 9rem;
+  padding: var(--space-3);
+  color: var(--sys-color-text);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-primary);
+  border-radius: var(--sys-radius-sm);
+  resize: vertical;
+}
+
+.bioMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  color: var(--sys-color-text-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.bioMeta > div {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.bioMeta button,
+.modalActions button {
+  min-block-size: 2.65rem;
+  padding: var(--space-2) var(--space-4);
+  color: var(--sys-color-text);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border-strong);
+  border-radius: var(--sys-radius-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  border-block-start: 1px solid var(--sys-color-border);
+}
+
+.detailGrid div {
+  min-inline-size: 0;
+  padding: var(--space-4) var(--space-3) var(--space-4) 0;
+  border-block-end: 1px solid var(--sys-color-border);
+}
+
+.detailGrid div:nth-child(even) {
+  padding-inline-start: var(--space-4);
+  border-inline-start: 1px solid var(--sys-color-border);
+}
+
+.detailGrid dt {
+  color: var(--sys-color-text-subtle);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+}
+
+.detailGrid dd {
+  overflow-wrap: anywhere;
+  margin: var(--space-1) 0 0;
+  font-weight: var(--font-weight-semibold);
+}
+
+.addButton {
+  color: var(--sys-color-on-primary);
+  background: var(--sys-color-primary);
+  border-color: var(--sys-color-primary);
+}
+
+.addressGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.addressCard {
+  padding: var(--space-4);
+  background: var(--sys-color-surface-subtle);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-sm);
+}
+
+.addressCard > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+}
+
+.addressCard h3 {
+  display: inline;
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+.addressCard header span {
+  display: inline-block;
+  margin-inline-start: var(--space-2);
+  padding: 0.14rem var(--space-2);
+  color: var(--sys-color-on-primary-container);
+  background: var(--sys-color-primary-container);
+  border-radius: var(--sys-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.addressCard address {
+  color: var(--sys-color-text-muted);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  line-height: var(--line-height-body);
+}
+
+.cardActions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.cardActions button:last-child {
+  color: var(--sys-color-text-muted);
+}
+
+.emptyState {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  color: var(--sys-color-text-muted);
+  background: var(--sys-color-surface-subtle);
+  border: 1px dashed var(--sys-color-border-strong);
+  text-align: center;
+}
+
+.emptyState > span {
+  font-size: var(--font-size-2xl);
+}
+
+.emptyState h3,
+.emptyState p {
+  margin: 0;
+}
+
+.dangerZone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  box-shadow: none;
+}
+
+.dangerZone p {
+  color: var(--sys-color-logo);
+}
+
+.dangerZone h2 {
+  font-size: var(--font-size-md);
+}
+
+.dangerZone span {
+  display: block;
+  margin-block-start: var(--space-1);
+  color: var(--sys-color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.dangerZone > button,
+.dangerButton {
+  flex: 0 0 auto;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  color: var(--sys-color-on-logo);
+  background: var(--sys-color-logo);
+  border: 1px solid var(--sys-color-logo);
+  border-radius: var(--sys-radius-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.modalBackdrop {
+  position: fixed;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  inset: 0;
+  padding: var(--space-4);
+  background: var(--sys-color-overlay);
+  overflow-y: auto;
+}
+
+.modal {
+  inline-size: min(100%, 38rem);
+  max-block-size: calc(100vb - 2 * var(--space-4));
+  overflow-y: auto;
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border);
+  border-block-start: 0.28rem solid var(--sys-color-primary);
+  border-radius: var(--sys-radius-md);
+  box-shadow: var(--sys-shadow-lg);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-block-end: 1px solid var(--sys-color-border);
+}
+
+.closeButton {
+  display: grid;
+  place-items: center;
+  inline-size: 2.5rem;
+  aspect-ratio: 1;
+  color: var(--sys-color-text-muted);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-full);
+  font-size: var(--font-size-xl);
+  line-height: 1;
+}
+
+.modalForm,
+.avatarForm,
+.confirmBody {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.avatarForm {
+  justify-items: stretch;
+}
+
+.avatarModalPreview {
+  display: grid;
+  place-items: center;
+  inline-size: 7rem;
+  aspect-ratio: 1;
+  justify-self: center;
+  color: var(--sys-color-on-primary-container);
+  background-color: var(--ref-color-evergreen-200);
+  background-position: center;
+  background-size: cover;
+  border: 0.25rem solid var(--sys-color-surface);
+  border-radius: var(--sys-radius-full);
+  box-shadow: 0 0 0 1px var(--sys-color-border), var(--sys-shadow-md);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.avatarCropWorkspace {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: center;
+}
+
+.avatarCropCanvas {
+  display: block;
+  inline-size: min(100%, 17rem);
+  aspect-ratio: 1;
+  background: var(--sys-color-surface-subtle);
+  border: 0.25rem solid var(--sys-color-surface);
+  border-radius: var(--sys-radius-full);
+  box-shadow: 0 0 0 1px var(--sys-color-border), var(--sys-shadow-md);
+  cursor: grab;
+  touch-action: none;
+}
+
+.avatarCropCanvas:active {
+  cursor: grabbing;
+}
+
+.cropHint {
+  margin: 0;
+  color: var(--sys-color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.cropControls {
+  display: grid;
+  grid-template-columns: max-content minmax(9rem, 1fr);
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  inline-size: min(100%, 28rem);
+}
+
+.cropControls label {
+  color: var(--sys-color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.cropControls input[type="range"] {
+  inline-size: 100%;
+}
+
+.avatarForm input[type="file"] {
+  padding: var(--space-2);
+}
+
+.avatarModalActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.avatarModalActions .modalActions {
+  margin-block-start: 0;
+}
+
+.removeAvatarButton {
+  color: var(--sys-color-logo);
+  background: transparent;
+  border: 0;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.modalAlert,
+.inlineError {
+  margin: var(--space-4) var(--space-5) 0;
+  padding: var(--space-3);
+  color: var(--sys-color-text);
+  background: var(--sys-color-secondary-container);
+  border-inline-start: 0.22rem solid var(--sys-color-logo);
+  font-size: var(--font-size-sm);
+}
+
+.inlineError {
+  margin: 0;
+}
+
+.fieldGroup {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.fieldGroup label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.fieldGroup input,
+.fieldGroup select,
+.usernameInput {
+  inline-size: 100%;
+  min-block-size: 3rem;
+  color: var(--sys-color-text);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border-strong);
+  border-radius: var(--sys-radius-sm);
+}
+
+.fieldGroup > input,
+.fieldGroup > select {
+  padding: var(--space-3);
+}
+
+.usernameInput {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  overflow: hidden;
+}
+
+.usernameInput span {
+  padding-inline-start: var(--space-3);
+  color: var(--sys-color-text-muted);
+}
+
+.usernameInput input {
+  min-inline-size: 0;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-1);
+  border: 0;
+}
+
+.fieldHint {
+  margin: 0;
+  color: var(--sys-color-text-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.fieldErrors {
+  margin: 0;
+  padding: 0;
+  color: var(--sys-color-logo);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  list-style: none;
+}
+
+.defaultCheck {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.defaultCheck input {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+}
+
+.modalActions .saveButton,
+.bioMeta .saveButton {
+  color: var(--sys-color-on-primary);
+  background: var(--sys-color-primary);
+  border-color: var(--sys-color-primary);
+}
+
+.modalActions .dangerButton {
+  color: var(--sys-color-on-logo);
+  background: var(--sys-color-logo);
+  border-color: var(--sys-color-logo);
+}
+
+.modalActions button:disabled,
+.bioMeta button:disabled {
+  opacity: 0.58;
+  cursor: wait;
+}
+
+.confirmBody > p {
+  margin: 0;
+  color: var(--sys-color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+.visuallyHidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 58rem) {
+  .heroInner {
+    grid-template-columns: auto 1fr;
+  }
+
+  .heroEditButton {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .accountContent {
+    grid-template-columns: 1fr;
+  }
+
+  .detailsSection,
+  .addressSection,
+  .dangerZone {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 40rem) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .identityMeta {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .identityMeta span + span::before {
+    display: none;
+  }
+
+  .sectionHeading,
+  .dangerZone,
+  .addressCard > header,
+  .bioMeta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .detailGrid,
+  .addressGrid,
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailGrid div:nth-child(even) {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+
+  .dangerZone > button,
+  .addButton {
+    inline-size: 100%;
+  }
+
+  .modalBackdrop {
+    align-items: end;
+    padding: 0;
+  }
+
+  .modal {
+    max-block-size: 92vb;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .modalHeader,
+  .modalForm,
+  .avatarForm,
+  .confirmBody {
+    padding: var(--space-4);
+  }
+
+  .avatarModalActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .avatarModalActions .modalActions {
+    justify-content: stretch;
+  }
+
+  .avatarModalActions .modalActions button {
+    flex: 1;
+  }
+}

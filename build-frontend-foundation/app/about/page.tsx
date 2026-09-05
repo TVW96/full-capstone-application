@@ -1,0 +1,7 @@
+import EditorialPage from "@/components/EditorialPage";
+export const metadata = { title: "About | MangaMarketplace" };
+export default function AboutPage() { return <EditorialPage eyebrow="Our reason for being" title="Every volume deserves its next reader." intro="MangaMarketplace is a collector-first marketplace built around the details generic resale sites forget: exact editions, honest condition notes, and the joy of closing a gap on your shelf." note="We are building for readers first—clear listings, accountable transactions, and tools that help collections circulate instead of gathering dust." sections={[
+  { number: "01", title: "Made for the exact-copy hunt", body: "A title is only the beginning. Printing, language, format, volume number, condition, and seller photographs make a listing useful to a collector.", points: ["Series and volume structure", "Seller-owned copy photos", "Edition-level details", "Single volumes and bundles"] },
+  { number: "02", title: "Community supply, clearer standards", body: "Sellers publish the books they actually own. Buyers see the same copy details before and after checkout, creating a shared record of what changed hands." },
+  { number: "03", title: "A safer path from shelf to shelf", body: "Payments run through Stripe Checkout. Shipping addresses and available delivery services are collected in the protected checkout flow, while paid orders are recorded by signed webhook events." },
+]} cta={{ label: "Browse the shelves", href: "/shop", text: "Find the volume that completes the run." }} />; }

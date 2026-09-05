@@ -1,0 +1,30 @@
+.main { inline-size: min(100%, var(--layout-content-max)); margin-inline: auto; padding: var(--space-7) var(--layout-gutter) var(--space-8); }
+.hero { position: relative; overflow: hidden; padding: clamp(2rem, 6vw, 5rem); color: var(--sys-color-on-utility); background: var(--sys-color-utility-deep); border-radius: var(--sys-radius-lg); }
+.hero::after { position: absolute; inset: auto -5rem -8rem auto; inline-size: 23rem; block-size: 23rem; border: 4rem solid color-mix(in oklch, var(--sys-color-on-utility) 10%, transparent); border-radius: 50%; content: ""; }
+.eyebrow { margin: 0 0 var(--space-3); color: var(--sys-color-on-utility-muted); font-size: var(--font-size-xs); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.hero h1 { position: relative; z-index: 1; max-inline-size: 15ch; margin: 0; font-size: var(--font-size-3xl); line-height: 1; letter-spacing: -.055em; }
+.hero > p:not(.eyebrow) { position: relative; z-index: 1; max-inline-size: 58ch; margin: var(--space-4) 0 0; color: var(--sys-color-on-utility-muted); }
+.hero dl { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: var(--space-5); margin: var(--space-6) 0 0; }
+.hero dl div { display: grid; gap: .15rem; }
+.hero dt { color: var(--sys-color-on-utility-muted); font-size: var(--font-size-xs); }
+.hero dd { margin: 0; font-weight: 750; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3); margin: var(--space-5) 0; padding-block: var(--space-3); border-block-end: 1px solid var(--sys-color-border); }
+.toolbar p { margin: 0 auto 0 0; }
+.toolbar label { display: grid; gap: .3rem; color: var(--sys-color-text-muted); font-size: var(--font-size-xs); font-weight: 700; }
+.toolbar select { min-block-size: 2.7rem; padding: .55rem 2.2rem .55rem .8rem; color: var(--sys-color-text); background: var(--sys-color-surface); border: 1px solid var(--sys-color-border-strong); border-radius: var(--sys-radius-sm); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+.card { display: grid; grid-template-rows: 18rem 1fr; overflow: hidden; block-size: 100%; background: var(--sys-color-surface); border: 1px solid var(--sys-color-border); border-radius: var(--sys-radius-md); box-shadow: var(--sys-shadow-sm); transition: transform var(--duration-normal), box-shadow var(--duration-normal); }
+.card:hover { transform: translateY(-3px); box-shadow: var(--sys-shadow-md); }
+.imageLink { position: relative; display: block; overflow: hidden; background: var(--sys-color-surface-subtle); }
+.imageLink img { inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform 400ms var(--ease-standard); }
+.card:hover .imageLink img { transform: scale(1.035); }
+.imageLink span { position: absolute; inset: .8rem auto auto .8rem; padding: .35rem .6rem; color: var(--sys-color-on-primary-container); background: color-mix(in oklch, var(--sys-color-primary-container) 90%, transparent); border-radius: 999px; font-size: var(--font-size-xs); font-weight: 750; backdrop-filter: blur(8px); }
+.body { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); }
+.meta { margin: 0; color: var(--sys-color-primary); font-size: var(--font-size-xs); font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+.body h2 { margin: 0; font-size: var(--font-size-lg); line-height: 1.25; }
+.body h2 a { color: inherit; text-decoration: none; }
+.description { display: -webkit-box; overflow: hidden; margin: 0; color: var(--sys-color-text-muted); font-size: var(--font-size-sm); -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.priceRow { display: flex; justify-content: space-between; align-items: baseline; margin-block-start: auto; padding-block-start: var(--space-3); }
+.priceRow strong { font-family: var(--font-family-mono); font-size: var(--font-size-xl); }
+.priceRow span { color: var(--sys-color-text-muted); font-size: var(--font-size-xs); }
+@media (max-width: 42rem) { .hero dl { display: grid; grid-template-columns: repeat(2, 1fr); } .toolbar { align-items: stretch; } .toolbar p { inline-size: 100%; } .toolbar label { flex: 1; } }

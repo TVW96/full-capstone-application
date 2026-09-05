@@ -1,0 +1,4 @@
+services:
+  nestjs:
+    environment:
+      DATABASE_TARGET: supabase

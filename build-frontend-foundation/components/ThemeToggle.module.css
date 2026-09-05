@@ -1,0 +1,161 @@
+.themeToggle {
+  --widget-size: 3.25rem;
+
+  position: fixed;
+  inset-block-start: 4rem;
+  inset-inline-end: 1rem;
+  z-index: calc(var(--z-overlay) + 1);
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--widget-size);
+  block-size: var(--widget-size);
+  padding: 0;
+  color: var(--sys-color-on-primary);
+  background: var(--sys-color-primary);
+  border: 0.15rem solid var(--sys-color-surface);
+  border-radius: var(--sys-radius-full);
+  box-shadow:
+    0 0 0 0.12rem var(--sys-color-primary),
+    var(--sys-shadow-md);
+  translate: 0 -50%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  isolation: isolate;
+  transition:
+    scale var(--duration-normal) var(--ease-standard),
+    box-shadow var(--duration-normal) var(--ease-standard),
+    background var(--duration-normal) var(--ease-standard);
+  animation: widgetPulse 3.6s ease-in-out infinite;
+}
+
+.themeToggle[data-positioned="true"] {
+  inset-block-start: var(--widget-y);
+  inset-inline-start: var(--widget-x);
+  inset-inline-end: auto;
+  translate: none;
+}
+
+.themeToggle::before {
+  position: absolute;
+  z-index: -1;
+  inset: -0.5rem;
+  content: "";
+  border: 1px dashed color-mix(in oklch, var(--sys-color-primary) 70%, transparent);
+  border-radius: inherit;
+  opacity: 0;
+  scale: 0.82;
+  transition:
+    opacity var(--duration-normal) ease,
+    scale var(--duration-normal) var(--ease-standard);
+}
+
+.themeToggle:hover,
+.themeToggle:focus-visible {
+  scale: 1.08;
+  box-shadow:
+    0 0 0 0.16rem var(--sys-color-primary),
+    var(--sys-shadow-lg);
+  animation-play-state: paused;
+}
+
+.themeToggle:hover::before,
+.themeToggle:focus-visible::before,
+.themeToggle[data-dragging="true"]::before {
+  opacity: 1;
+  scale: 1;
+  animation: orbitRing 6s linear infinite;
+}
+
+.themeToggle:focus-visible {
+  outline: 0.2rem solid var(--sys-color-focus);
+  outline-offset: 0.35rem;
+}
+
+.themeToggle[data-dragging="true"] {
+  scale: 1.12;
+  cursor: grabbing;
+  box-shadow:
+    0 0 0 0.2rem var(--sys-color-primary-container),
+    var(--sys-shadow-lg);
+  animation: dragWiggle 420ms ease-in-out infinite alternate;
+}
+
+.themeToggle svg {
+  grid-area: 1 / 1;
+  inline-size: 1.4rem;
+  block-size: 1.4rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  animation: iconArrive 360ms var(--ease-standard) both;
+  pointer-events: none;
+}
+
+.sunIcon {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .moonIcon {
+  display: none;
+}
+
+:global(:root[data-theme="dark"]) .sunIcon {
+  display: block;
+}
+
+@keyframes widgetPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0.12rem var(--sys-color-primary),
+      var(--sys-shadow-md);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 0.28rem var(--sys-color-primary-container),
+      var(--sys-shadow-lg);
+  }
+}
+
+@keyframes orbitRing {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@keyframes dragWiggle {
+  from {
+    rotate: -2deg;
+  }
+
+  to {
+    rotate: 2deg;
+  }
+}
+
+@keyframes iconArrive {
+  from {
+    opacity: 0;
+    scale: 0.55;
+    rotate: -35deg;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+    rotate: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .themeToggle,
+  .themeToggle::before,
+  .themeToggle svg {
+    animation: none;
+    transition: none;
+  }
+}

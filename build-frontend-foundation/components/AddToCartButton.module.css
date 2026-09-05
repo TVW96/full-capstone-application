@@ -1,0 +1,4 @@
+.add, .checkout { display: inline-flex; min-block-size: 3rem; align-items: center; justify-content: center; gap: .5rem; padding: .75rem 1.1rem; border: 1px solid var(--sys-color-primary); border-radius: var(--sys-radius-sm); background: var(--sys-color-primary); color: var(--sys-color-on-primary); font: inherit; font-weight: var(--font-weight-bold); text-decoration: none; cursor: pointer; transition: transform var(--duration-fast), background var(--duration-fast); }
+.add:hover, .checkout:hover { background: var(--sys-color-primary-hover); transform: translateY(-1px); }
+.checkout { inline-size: 100%; }
+.unavailable { margin: 0; padding: .75rem; border: 1px solid var(--sys-color-border); border-radius: var(--sys-radius-sm); color: var(--sys-color-text-muted); font-size: var(--font-size-sm); }

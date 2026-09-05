@@ -1,0 +1,10 @@
+.main { display: grid; min-block-size: 70vb; place-items: center; padding: var(--space-7) var(--layout-gutter); background: linear-gradient(140deg, var(--sys-color-primary-container), var(--sys-color-canvas) 55%); }
+.main section { max-inline-size: 44rem; padding: clamp(2rem, 6vw, 5rem); text-align: center; background: var(--sys-color-surface); border: 1px solid var(--sys-color-border); border-radius: var(--sys-radius-lg); box-shadow: var(--sys-shadow-lg); }
+.mark { display: grid; inline-size: 4rem; block-size: 4rem; margin-inline: auto; place-items: center; color: var(--sys-color-on-primary); background: var(--sys-color-primary); border-radius: 50%; font-size: var(--font-size-xl); font-weight: 800; }
+.eyebrow { margin: var(--space-4) 0 var(--space-2); color: var(--sys-color-primary); font-size: var(--font-size-xs); font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.main h1 { margin: 0; font-size: var(--font-size-2xl); letter-spacing: -.045em; }
+.main h1 + p { color: var(--sys-color-text-muted); }
+.reference { font-family: var(--font-family-mono); font-size: var(--font-size-xs); }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-block-start: var(--space-5); }
+.actions a { padding: .75rem 1rem; color: var(--sys-color-on-primary); background: var(--sys-color-primary); border-radius: var(--sys-radius-sm); font-weight: 750; text-decoration: none; }
+.actions a:last-child { color: var(--sys-color-primary); background: transparent; border: 1px solid var(--sys-color-primary); }

@@ -1,0 +1,7 @@
+import EditorialPage from "@/components/EditorialPage";
+export const metadata = { title: "Collectibles | MangaMarketplace" };
+export default function CollectiblesPage() { return <EditorialPage eyebrow="Beyond the bookshelf" title="The objects that make a collection yours." intro="Art books, figures, first printings, box-set extras, and ephemera belong to the same collector story. This section establishes the listing standards for the collectibles catalog." note="Collectible-specific inventory is opening in a later catalog release. Manga listings are available now, and sellers can already prepare detailed copy photographs." sections={[
+  { number: "01", title: "Print and paper", body: "Art books, magazines, promotional booklets, prints, postcards, and limited inserts should identify dimensions, language, publisher, printing, and every included piece.", points: ["Art books", "Promotional inserts", "Limited printings", "Magazines and guides"] },
+  { number: "02", title: "Figures and display pieces", body: "List manufacturer, scale, release, packaging status, and known authenticity markers. Photographs should show seals, bases, accessories, and box wear—not only the best angle." },
+  { number: "03", title: "Condition that fits the object", body: "A book, a figure, and a sealed bonus item need different condition vocabulary. Category-specific fields will make flaws easier to describe and comparisons more useful." },
+]} cta={{ label: "Browse manga now", href: "/shop", text: "Start with the exact-copy marketplace." }} />; }

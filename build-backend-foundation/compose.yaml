@@ -1,0 +1,40 @@
+services:
+  nestjs:
+    build:
+      context: .
+      # Build the final image
+      target: final
+    container_name: nestjs-api
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+      DATABASE_TARGET: ${DATABASE_TARGET:-local}
+      DB_HOST: ${DB_HOST:-localhost}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_USERNAME: ${DB_USERNAME:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: ${DB_NAME:-manga_marketplace}
+      DB_POOL_SIZE: ${DB_POOL_SIZE:-5}
+      DB_CONNECT_TIMEOUT_MS: ${DB_CONNECT_TIMEOUT_MS:-10000}
+      DATABASE_URL: ${DATABASE_URL:-}
+      MIGRATION_DATABASE_URL: ${MIGRATION_DATABASE_URL:-}
+      DATABASE_SSL_CA: ${DATABASE_SSL_CA:-}
+      DATABASE_SSL_CA_FILE: ${DATABASE_SSL_CA_FILE:-}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-}
+    ports:
+      - "${API_PORT:-3001}:3001"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('node:http').get('http://127.0.0.1:3001', (res) => process.exit(res.statusCode >= 200 && res.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1));",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped

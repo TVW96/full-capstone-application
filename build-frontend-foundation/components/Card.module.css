@@ -1,0 +1,82 @@
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #fff;
+    width: min(100%, clamp(13rem, 20vw, 22rem));
+    max-width: clamp(13rem, 20vw, 22rem);
+    height: clamp(18rem, 30vw, 25rem);
+    margin: 1rem;
+    padding: 1rem;
+    border: .025rem solid var(--ref-color-evergreen-600);
+    border-radius: 0.75rem;
+    background-color: var(--sys-color-surface);
+    overflow: hidden;
+    transition:
+        border-color 0.3s ease-out,
+        box-shadow 0.3s ease-out,
+        transform 0.3s ease-out,
+        opacity 0.3s ease-out,
+        background-color 0.3s ease-out,
+        outline-color 0.3s ease-out,
+        outline-offset 0.3s ease-out;
+
+    &:is(:hover, :has(a:focus-visible)) {
+        border: .125rem solid var(--ref-color-evergreen-300);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: translateY(-4px);
+        opacity: 0.85;
+        background-color: var(--sys-color-surface-variant);
+        cursor: pointer;
+    }
+    &:has(a:focus-visible) {
+        outline: 3px solid var(--color-accent);
+        outline-offset: 4px;
+    }
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: yellow;
+    & h2 {
+        font-size: 1.5rem;
+        margin: 0.5rem 0;
+    }
+    &:is(:hover, :has(a:focus-visible)) {
+        color: var(--ref-color-evergreen-100);
+        background-color: var(--sys-color-surface-variant);
+    }
+    &:has(a:focus-visible) {
+        outline: 3px solid var(--color-accent);
+        outline-offset: 4px;
+        background-color: var(--sys-color-surface-variant);
+    }
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 16rem;
+  object-fit: cover;
+}
+
+.cardImage {
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cardImage img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}

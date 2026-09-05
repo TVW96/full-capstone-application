@@ -1,0 +1,69 @@
+.carousel {
+  inline-size: 100%;
+}
+
+.viewport {
+  overflow: hidden;
+}
+
+.slide {
+  min-inline-size: 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-block-start: var(--space-4);
+}
+
+.arrow,
+.indicator {
+  border: 0;
+  cursor: pointer;
+}
+
+.arrow {
+  display: grid;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  place-items: center;
+  color: var(--sys-color-on-primary-container);
+  background: var(--sys-color-primary-container);
+  border-radius: var(--sys-radius-full);
+  font-size: var(--font-size-lg);
+}
+
+.arrow:hover,
+.arrow:focus-visible {
+  background: var(--sys-color-primary);
+  color: var(--sys-color-on-primary);
+}
+
+.indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.indicator {
+  inline-size: 0.55rem;
+  block-size: 0.55rem;
+  padding: 0;
+  background: var(--sys-color-border);
+  border-radius: var(--sys-radius-full);
+}
+
+.indicator:hover,
+.indicator:focus-visible,
+.activeIndicator {
+  background: var(--sys-color-accent);
+}
+
+.arrow:focus-visible,
+.indicator:focus-visible {
+  outline: 2px solid var(--sys-color-accent);
+  outline-offset: 3px;
+}

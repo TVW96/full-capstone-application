@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: manga-marketplace-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-manga_marketplace}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - manga-marketplace-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-manga_marketplace}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nestjs:
+    environment:
+      DATABASE_TARGET: local
+      DB_HOST: postgres
+      DB_PORT: 5432
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  manga-marketplace-data:

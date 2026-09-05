@@ -1,0 +1,43 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(18.5rem, 20vw, 22.5rem), 1fr));
+  gap: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: .025rem solid var(--ref-color-evergreen-600);
+  border-radius: 0.75rem;
+  background-color: var(--ref-color-evergreen-800);
+}
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: clamp(12.5rem, 20vw, 18.75rem);
+  justify-content: center;
+  padding: 1rem;
+  border: .025rem solid var(--ref-color-evergreen-600);
+  border-radius: 0.75rem;
+  background-color: var(--sys-color-surface);
+  transition:
+    border-color 0.3s ease-out,
+    box-shadow 0.3s ease-out,
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out,
+    background-color 0.3s ease-out,
+    outline-color 0.3s ease-out,
+    outline-offset 0.3s ease-out;
+
+  &:is(:hover, :has(a:focus-visible)) {
+    border: .125rem solid var(--ref-color-evergreen-300);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    opacity: 0.85;
+    background-color: var(--sys-color-surface-variant);
+    cursor: pointer;
+  }
+  &:has(a:focus-visible) {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+}
