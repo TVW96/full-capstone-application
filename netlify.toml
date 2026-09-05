@@ -1,0 +1,6 @@
+[build]
+  command = "npm --prefix build-frontend-foundation ci && npm --prefix build-frontend-foundation run build"
+  publish = "build-frontend-foundation/out"
+
+[build.environment]
+  NODE_VERSION = "22"
