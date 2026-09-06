@@ -10,8 +10,6 @@
     "docker:build:supabase": "docker compose -f compose.yaml -f compose.supabase.yaml build",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "seed": "ts-node -r tsconfig-paths/register src/database/seeds/seed.ts",
-    "seed:remove": "ts-node -r tsconfig-paths/register src/database/seeds/remove-seeds.ts",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",

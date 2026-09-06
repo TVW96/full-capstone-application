@@ -189,24 +189,12 @@ Schema synchronization and automatic migrations at API startup remain disabled.
 Run migrations as an explicit deployment step so a failed migration cannot be
 hidden inside an application restart loop.
 
-## Seed data
+## Data loading
 
-With the database environment variables configured, populate the local
-database with deterministic development records:
-
-```bash
-npm run seed
-```
-
-The seed is safe to rerun: it updates the records associated with its stable
-UUIDs and does not delete unrelated data. It creates catalog products,
-seller-owned inventory in several availability states, active listings, a sold
-listing, and their listing-item relationships. The seeded users match the owner
-and seller UUIDs referenced by the inventory and listing records.
-
-There is intentionally no reset command. To initialize a database, run its
-migrations and then the non-destructive, idempotent seed. If a disposable local
-database must be recreated, remove its Docker volume explicitly and rerun the
+Migrations create the schema only. The application does not ship with seed or
+demo records. Load production or user-created records through the API and
+seller workflows after the migration step. To start a disposable local
+database from an empty state, remove its Docker volume explicitly and rerun the
 migrations; production and Supabase databases are never reset by an npm script.
 
 ## User signup

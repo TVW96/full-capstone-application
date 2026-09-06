@@ -15,8 +15,9 @@ docker compose -f compose.yaml -f compose.local.yaml run --rm nestjs npm run mig
 docker compose -f compose.yaml -f compose.local.yaml up -d nestjs
 ```
 
-The named `manga-marketplace-data` volume preserves data between container
-restarts. Removing that volume is intentionally a separate, explicit operation.
+The named `manga-marketplace-data` volume preserves real application data
+between container restarts. Removing that volume is intentionally a separate,
+explicit operation and creates an empty database after the next migration run.
 
 ## Supabase PostgreSQL
 
