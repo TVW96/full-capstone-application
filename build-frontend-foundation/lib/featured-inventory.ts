@@ -81,7 +81,11 @@ async function fetchApiCollection(url: string): Promise<unknown[]> {
 }
 
 export async function getAvailableInventory(): Promise<FeaturedInventoryItem[]> {
-  const apiBase = (process.env.BACKEND_API_URL ?? "http://127.0.0.1:3001").replace(/\/$/, "");
+  const apiBase = (
+    process.env.BACKEND_API_URL ??
+    process.env.NEXT_PUBLIC_BACKEND_API_URL ??
+    "http://127.0.0.1:3001"
+  ).replace(/\/$/, "");
 
   try {
     const listings = await fetchApiCollection(`${apiBase}/listings`);

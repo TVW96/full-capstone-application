@@ -58,3 +58,18 @@ Actions → Variables**, add `NEXT_PUBLIC_BACKEND_API_URL` with the public HTTPS
 URL of the deployed API. The API must also include the GitHub Pages site origin
 in its `CORS_ORIGINS` setting. GitHub Pages hosts only the frontend files; it
 does not run the NestJS backend.
+
+## Netlify deployment
+
+Netlify also hosts only the static frontend. Deploy the NestJS API separately,
+then add its public HTTPS origin as the `NEXT_PUBLIC_BACKEND_API_URL` Netlify
+environment variable before building. The frontend uses that value for browser
+requests and static page generation; do not use `localhost` or a Docker service
+name.
+
+Configure the API deployment with `DATABASE_TARGET=supabase`, the runtime
+`DATABASE_URL`, migration `MIGRATION_DATABASE_URL`,
+`DATABASE_SSL_CA_FILE` (or `DATABASE_SSL_CA`), and
+`CORS_ORIGINS=https://your-site.netlify.app`. Run the migrations against the
+Supabase database before starting the API. Supabase dashboard data is not
+available to Netlify directly: the browser reads listings from the NestJS API.
