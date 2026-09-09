@@ -34,6 +34,16 @@ export class SellingService {
 
   async publish(token: string, dto: PublishListingDto, photos: AvatarUpload[]) {
     const user = await this.users.requireAuthenticatedUser(token);
+    if (
+      !user.stripeConnectedAccountId ||
+      !user.stripeDetailsSubmitted ||
+      !user.stripeTransfersEnabled ||
+      !user.stripePayoutsEnabled
+    ) {
+      throw new ConflictException(
+        "Complete Stripe seller onboarding before publishing a listing.",
+      );
+    }
     const indexes = dto.copies.flatMap((copy) => copy.photoIndexes);
     if (
       !photos.length ||

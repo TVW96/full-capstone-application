@@ -38,7 +38,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 ################################################
 # Stage: Build
 ################################################
-FROM deps AS build
+FROM deps AS build-runner
 
 # Download additional development dependencies before building, as some projects require
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
@@ -49,6 +49,10 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 
 # Copy the rest of the source files into the image.
 COPY . .
+CMD ["npm", "run", "build"]
+
+FROM build-runner AS build
+
 # Run the build script.
 RUN npm run build
 

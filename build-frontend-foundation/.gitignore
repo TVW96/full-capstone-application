@@ -42,9 +42,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# Environment files live only at the repository root.
 .env*
-!.env.example
 
 # vercel
 .vercel

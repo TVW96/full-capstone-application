@@ -14,6 +14,10 @@ user avatars without storing duplicate image bytes in PostgreSQL.
 The Start selling publication endpoint, image processing, and retry behavior
 are documented in [`docs/selling-publish.md`](docs/selling-publish.md).
 
+Stripe Connect onboarding, verification-hub operations, failed-inspection
+refunds, and the outbound-shipment seller release gate are documented in
+[`docs/payments-and-shipping.md`](docs/payments-and-shipping.md).
+
 ## Phase 1
 
 ### Step 1 - Core Database Domain Model / Business Logic
@@ -131,6 +135,9 @@ The same TypeORM entities and migrations support either local PostgreSQL or a
 Supabase-hosted PostgreSQL database. `DATABASE_TARGET` is an explicit safety
 switch; it defaults to `local` when omitted.
 
+Use the repository-root `.env` for both local and Supabase configurations; do
+not create a backend-specific env file.
+
 Local development uses the component connection fields:
 
 ```dotenv
@@ -170,20 +177,26 @@ npm run migration:run:local
 npm run migration:run:supabase
 ```
 
-If the SQL editor is required instead of the TypeORM command, run
-[`sql/stage-consolidated-schema.sql`](/Users/tvw/Documents/VScode/Capstone/build-backend-foundation/sql/stage-consolidated-schema.sql)
-on a new project. For an existing legacy project, run
-[`sql/stage-data-preserving-supabase-migration.sql`](/Users/tvw/Documents/VScode/Capstone/build-backend-foundation/sql/stage-data-preserving-supabase-migration.sql)
+If the SQL editor is required for the portable core/media bootstrap, run
+[`sql/stage-consolidated-schema.sql`](sql/stage-consolidated-schema.sql) on a
+new project. For an existing legacy project, run
+[`sql/stage-data-preserving-supabase-migration.sql`](sql/stage-data-preserving-supabase-migration.sql)
 instead; it copies legacy image rows before removing the old image tables.
 
-The baseline creates the full schema on an empty database. If every application
-table already exists from the legacy migration chain, it records the baseline
-without changing data. It refuses partially initialized schemas. The security
-migration enables RLS and revokes direct Data API access from Supabase's `anon`
-and `authenticated` roles, including access to TypeORM's migration history.
-When Supabase Storage is present, it also creates or updates the `avatars` and
-`marketplace-images` buckets. On plain PostgreSQL, Storage provisioning is
-skipped.
+Those SQL bootstrap files do not replace the TypeORM migration runner for
+orders, payments, or verification transactions. After using either SQL file,
+run `npm run migration:run:supabase` so every later migration is recorded and
+applied in timestamp order. Do not start the API until `npm run migration:show`
+reports no pending migrations.
+
+The TypeORM chain creates the full current schema on an empty database. Its
+baseline migration adopts a complete legacy core/media schema without changing
+data and refuses a partially initialized schema. Later migrations add payment
+and verification tables. The security migrations enable RLS and revoke direct
+Data API access from Supabase's `anon` and `authenticated` roles, including
+access to TypeORM's migration history. When Supabase Storage is present, they
+also create or update the `avatars` and `marketplace-images` buckets. On plain
+PostgreSQL, Storage provisioning is skipped.
 
 Schema synchronization and automatic migrations at API startup remain disabled.
 Run migrations as an explicit deployment step so a failed migration cannot be
@@ -214,8 +227,12 @@ Create a user and a 30-day session with `POST /users`:
 ```
 
 Passwords are salted and hashed with `scrypt`. The API returns the raw session
-token once; only its SHA-256 hash is stored in `user_sessions`. The frontend
-keeps the returned token in an HTTP-only, same-site cookie.
+token once; only its SHA-256 hash is stored in `user_sessions`. The current
+static frontend keeps the bearer token in browser session/local storage, which
+is suitable for this prototype but increases the impact of an XSS bug. Before
+production, move authentication behind a same-origin backend-for-frontend that
+uses a `Secure`, `HttpOnly`, appropriately `SameSite` cookie plus CSRF/origin
+protections.
 
 ## Authenticated account API
 

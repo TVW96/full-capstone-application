@@ -16,6 +16,12 @@ import { MediaAsset } from "../../media/entities/media-asset.entity";
 import { UserSession } from "./user-session.entity";
 import { UserAddress } from "./user-address.entity";
 
+export enum UserRole {
+  CUSTOMER = "customer",
+  OPERATIONS = "operations",
+  ADMIN = "admin",
+}
+
 @Entity({ name: "users" })
 export class User {
   @PrimaryGeneratedColumn("uuid", {
@@ -64,6 +70,50 @@ export class User {
     length: 2,
   })
   region: string;
+
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.CUSTOMER,
+  })
+  role: UserRole;
+
+  @Column({
+    name: "stripe_connected_account_id",
+    type: "varchar",
+    length: 255,
+    nullable: true,
+    unique: true,
+  })
+  stripeConnectedAccountId: string | null;
+
+  @Column({
+    name: "stripe_details_submitted",
+    type: "boolean",
+    default: false,
+  })
+  stripeDetailsSubmitted: boolean;
+
+  @Column({
+    name: "stripe_transfers_enabled",
+    type: "boolean",
+    default: false,
+  })
+  stripeTransfersEnabled: boolean;
+
+  @Column({
+    name: "stripe_payouts_enabled",
+    type: "boolean",
+    default: false,
+  })
+  stripePayoutsEnabled: boolean;
+
+  @Column({
+    name: "stripe_account_updated_at",
+    type: "timestamptz",
+    nullable: true,
+  })
+  stripeAccountUpdatedAt: Date | null;
 
   @Column({
     name: "password_hash",

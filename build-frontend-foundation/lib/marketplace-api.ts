@@ -23,9 +23,7 @@ export type InventoryItem = {
 };
 
 const apiBaseUrl = (
-  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
-  process.env.NEXT_PUBLIC_MARKETPLACE_API_URL ||
-  "http://127.0.0.1:3001"
+  process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://127.0.0.1:3001"
 ).replace(/\/$/, "");
 
 async function fetchCollection<T>(path: string): Promise<T[]> {

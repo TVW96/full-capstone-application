@@ -8,12 +8,14 @@ import { ListingsModule } from "./listings/listings.module";
 import { MediaModule } from "./media/media.module";
 import { UsersModule } from "./users/users.module";
 import { createDatabaseOptions } from "./database/database-options";
+import { repositoryEnvironmentFile } from "./database/environment";
 import { SellingModule } from "./selling/selling.module";
 import { PaymentsModule } from "./payments/payments.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: repositoryEnvironmentFile(),
       isGlobal: true,
     }),
 

@@ -7,7 +7,14 @@ import {
 } from "typeorm";
 
 import { Listing } from "../../listings/entities/listing.entity";
+import { User } from "../../users/entities/user.entity";
 import { Order } from "./order.entity";
+
+export type PurchasedCopySnapshot = {
+  itemId: string;
+  condition: string;
+  conditionNotes: string | null;
+};
 
 @Entity({ name: "order_items" })
 export class OrderItem {
@@ -28,9 +35,19 @@ export class OrderItem {
   @JoinColumn({ name: "listing_id" })
   listing!: Listing;
 
+  @Column({ name: "seller_id", type: "uuid", nullable: true })
+  sellerId!: string | null;
+
+  @ManyToOne(() => User, { nullable: true, onDelete: "RESTRICT" })
+  @JoinColumn({ name: "seller_id" })
+  seller!: User | null;
+
   @Column({ type: "varchar", length: 160 })
   title!: string;
 
   @Column({ name: "unit_amount", type: "integer" })
   unitAmount!: number;
+
+  @Column({ name: "condition_snapshot", type: "jsonb", nullable: true })
+  conditionSnapshot!: PurchasedCopySnapshot[] | null;
 }

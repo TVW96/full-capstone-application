@@ -15,6 +15,7 @@ import type {
   AccountUser,
 } from "@/app/account/_lib/account-types";
 import { COUNTRY_OPTIONS, getCountryName } from "@/app/account/_lib/countries";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   type ChangeEvent,
@@ -1021,6 +1022,21 @@ export default function AccountDashboard({ account }: { account: AccountUser }) 
               <p>Add one when you are ready to buy, sell, or trade.</p>
             </div>
           )}
+        </section>
+
+        <section className={styles.payoutsSection} aria-labelledby="payouts-heading">
+          <div>
+            <p>Seller payments</p>
+            <h2 id="payouts-heading">Payouts and verification orders</h2>
+            <span>
+              Complete Stripe-hosted onboarding, see where sold items must be
+              sent, and submit inbound tracking.
+            </span>
+          </div>
+          <div className={styles.transactionActions}>
+            <Link href="/account/orders">View purchases</Link>
+            <Link href="/account/payouts">Manage seller payments</Link>
+          </div>
         </section>
 
         <section className={styles.dangerZone} aria-labelledby="danger-heading">

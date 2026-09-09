@@ -44,11 +44,12 @@ book details, photo uploads, pricing, and review before publication. See
 
 ## Account API configuration
 
-Copy `.env.example` to `.env` when the backend is not available at the default
-local address. `NEXT_PUBLIC_BACKEND_API_URL` is used by browser requests and
-`BACKEND_API_URL` by server rendering; both point to the NestJS API, which is
-`http://127.0.0.1:3001` in local development. PostgreSQL and Supabase server
-credentials must never be added to the frontend environment.
+Use the repository-root `.env`; there is no frontend-specific env file.
+`NEXT_PUBLIC_BACKEND_API_URL` points all browser requests and static generation
+to `/api`. The Docker nginx container proxies that path to the private NestJS
+service.
+PostgreSQL and Supabase server credentials must never receive a `NEXT_PUBLIC_`
+prefix.
 
 ## GitHub Pages deployment
 
@@ -61,15 +62,7 @@ does not run the NestJS backend.
 
 ## Netlify deployment
 
-Netlify also hosts only the static frontend. Deploy the NestJS API separately,
-then add its public HTTPS origin as the `NEXT_PUBLIC_BACKEND_API_URL` Netlify
-environment variable before building. The frontend uses that value for browser
-requests and static page generation; do not use `localhost` or a Docker service
-name.
-
-Configure the API deployment with `DATABASE_TARGET=supabase`, the runtime
-`DATABASE_URL`, migration `MIGRATION_DATABASE_URL`,
-`DATABASE_SSL_CA_FILE` (or `DATABASE_SSL_CA`), and
-`CORS_ORIGINS=https://your-site.netlify.app`. Run the migrations against the
-Supabase database before starting the API. Supabase dashboard data is not
-available to Netlify directly: the browser reads listings from the NestJS API.
+Netlify hosts the static frontend and proxies `/api/*` to the unified Docker
+application. Set `UNIFIED_APP_URL` in Netlify to that application's public HTTPS
+origin. The Netlify build generates `_redirects`; database and Supabase secrets
+remain only on the Docker host.

@@ -1,0 +1,140 @@
+.page {
+  min-block-size: calc(100vb - 8rem);
+  background: var(--sys-color-canvas);
+}
+
+.page > header {
+  padding: var(--space-7) var(--layout-gutter);
+  color: var(--sys-color-on-utility);
+  background: var(--sys-color-utility-deep);
+}
+
+.page > header > *,
+.content {
+  inline-size: min(100%, 72rem);
+  margin-inline: auto;
+}
+
+.page > header p {
+  margin: 0;
+  color: var(--ref-color-evergreen-200);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.page > header h1 {
+  margin: var(--space-1) 0 var(--space-2);
+  color: inherit;
+  font-size: var(--font-size-3xl);
+}
+
+.page > header span {
+  color: var(--sys-color-on-utility-muted);
+}
+
+.content {
+  padding: var(--space-5) var(--layout-gutter) var(--space-8);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-block-end: var(--space-4);
+}
+
+.toolbar a,
+.toolbar button,
+.empty a {
+  color: var(--sys-color-primary);
+  background: transparent;
+  border: 0;
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.error,
+.empty {
+  padding: var(--space-4);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-md);
+}
+
+.error {
+  color: var(--sys-color-on-danger-container);
+  background: var(--sys-color-danger-container);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.grid > article {
+  padding: var(--space-5);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-md);
+  box-shadow: var(--sys-shadow-sm);
+}
+
+.grid article > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.grid article header p,
+.grid article h2 {
+  margin: 0;
+}
+
+.grid article header p {
+  color: var(--sys-color-text-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.grid article h2 {
+  font-size: var(--font-size-lg);
+}
+
+.status {
+  margin-block-start: var(--space-4);
+  padding: var(--space-4);
+  background: var(--sys-color-primary-container);
+  border-radius: var(--sys-radius-sm);
+}
+
+.status span {
+  color: var(--sys-color-on-primary-container);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
+}
+
+.status p {
+  margin: var(--space-1) 0 0;
+  color: var(--sys-color-on-primary-container);
+}
+
+.tracking {
+  display: grid;
+  gap: var(--space-1);
+  margin-block-end: 0;
+  color: var(--sys-color-text-muted);
+}
+
+.refund {
+  color: var(--sys-color-danger);
+  font-weight: var(--font-weight-bold);
+}
+
+@media (max-width: 40rem) {
+  .grid article > header {
+    flex-direction: column;
+  }
+}

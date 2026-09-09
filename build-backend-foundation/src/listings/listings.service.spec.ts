@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   NotFoundException,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -137,6 +138,50 @@ describe('ListingsService', () => {
       ).rejects.toThrow(NotFoundException);
 
       expect(findOne).toHaveBeenCalled();
+    });
+  });
+
+  describe('reserved listing integrity', () => {
+    it('does not allow a seller to change a reserved bundle', async () => {
+      const listingItemRemove = jest.fn();
+      const listingFindOne = jest.fn().mockResolvedValue({
+        listingId: 'listing-1',
+        sellerId: 'seller-1',
+        status: ListingStatus.RESERVED,
+        listingItems: [
+          { inventoryItem: { itemId: 'item-1' } },
+          { inventoryItem: { itemId: 'item-2' } },
+        ],
+      });
+      const manager = {
+        getRepository: jest.fn((entity: unknown) => {
+          if ((entity as { name?: string }).name === 'Listing') {
+            return { findOne: listingFindOne };
+          }
+          if ((entity as { name?: string }).name === 'ListingItem') {
+            return { remove: listingItemRemove };
+          }
+          return { save: jest.fn() };
+        }),
+      };
+      const mockedService = service as unknown as {
+        dataSource: {
+          transaction: (
+            callback: (transactionManager: typeof manager) => Promise<unknown>,
+          ) => Promise<unknown>;
+        };
+      };
+      mockedService.dataSource = {
+        transaction: (callback) => callback(manager),
+      };
+
+      await expect(
+        service.removeItem('listing-1', 'item-1', 'seller-1'),
+      ).rejects.toBeInstanceOf(ConflictException);
+      expect(listingFindOne).toHaveBeenCalledWith(
+        expect.objectContaining({ lock: { mode: 'pessimistic_write' } }),
+      );
+      expect(listingItemRemove).not.toHaveBeenCalled();
     });
   });
 

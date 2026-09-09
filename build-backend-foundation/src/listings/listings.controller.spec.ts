@@ -1,4 +1,8 @@
-import { ForbiddenException, UnauthorizedException } from "@nestjs/common";
+import {
+  ConflictException,
+  ForbiddenException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { ListingsController } from "./listings.controller";
 import { ListingsService } from "./listings.service";
 import { UsersService } from "../users/users.service";
@@ -14,7 +18,13 @@ describe("ListingsController ownership", () => {
   const dto = { title: "Book", price: 10, itemIds: ["copy-id"] };
   beforeEach(() => {
     jest.clearAllMocks();
-    users.requireAuthenticatedUser.mockResolvedValue({ userId });
+    users.requireAuthenticatedUser.mockResolvedValue({
+      userId,
+      stripeConnectedAccountId: "acct_seller",
+      stripeDetailsSubmitted: true,
+      stripeTransfersEnabled: true,
+      stripePayoutsEnabled: true,
+    });
   });
 
   it("rejects a forged seller ID on the existing creation endpoint", async () => {
@@ -27,6 +37,13 @@ describe("ListingsController ownership", () => {
     await controller.create(userId, dto, "Bearer session");
     expect(users.requireAuthenticatedUser).toHaveBeenCalledWith("session");
     expect(listings.create).toHaveBeenCalledWith(userId, dto);
+  });
+  it("blocks listing creation until seller onboarding is complete", async () => {
+    users.requireAuthenticatedUser.mockResolvedValue({ userId });
+    await expect(
+      controller.create(userId, dto, "Bearer session"),
+    ).rejects.toBeInstanceOf(ConflictException);
+    expect(listings.create).not.toHaveBeenCalled();
   });
   it("uses the authenticated seller when removing a listing item", async () => {
     await controller.removeItem("listing-id", "copy-id", "Bearer session");

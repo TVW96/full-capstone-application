@@ -322,6 +322,22 @@ export class UsersService {
 
   async deleteAccount(token: string): Promise<void> {
     const user = await this.requireAuthenticatedUser(token);
+    const [{ transaction_count: transactionCount }]: Array<{
+      transaction_count: string;
+    }> = await this.usersRepository.manager.query(
+      `SELECT (
+         (SELECT count(*) FROM "orders"
+          WHERE "buyer_id" = $1 OR "seller_id" = $1)
+         +
+         (SELECT count(*) FROM "order_events" WHERE "actor_user_id" = $1)
+       )::text AS transaction_count`,
+      [user.userId],
+    );
+    if (Number(transactionCount) > 0 || user.stripeConnectedAccountId) {
+      throw new ConflictException(
+        "Accounts with transaction history cannot be self-deleted. Contact support for a legally compliant deactivation or anonymization request.",
+      );
+    }
     await this.usersRepository.manager.transaction(async (manager) => {
       await manager.query(
         `DELETE FROM "listing_items"

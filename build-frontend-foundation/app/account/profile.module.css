@@ -171,6 +171,7 @@
 .bioSection,
 .detailsSection,
 .addressSection,
+.payoutsSection,
 .dangerZone {
   padding: var(--space-5);
   background: var(--sys-color-surface);
@@ -189,8 +190,50 @@
 }
 
 .addressSection,
+.payoutsSection,
 .dangerZone {
   grid-column: 1 / -1;
+}
+
+.payoutsSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.payoutsSection p {
+  margin: 0;
+  color: var(--sys-color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.payoutsSection h2 {
+  margin: var(--space-1) 0 var(--space-2);
+  font-size: var(--font-size-xl);
+}
+
+.payoutsSection span {
+  color: var(--sys-color-text-muted);
+}
+
+.transactionActions {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+}
+
+.transactionActions a {
+  flex: none;
+  padding: var(--space-3) var(--space-4);
+  color: var(--sys-color-on-primary);
+  background: var(--sys-color-primary);
+  border-radius: var(--sys-radius-sm);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
 }
 
 .sectionHeading {
@@ -719,6 +762,7 @@
 
   .detailsSection,
   .addressSection,
+  .payoutsSection,
   .dangerZone {
     grid-column: auto;
     grid-row: auto;
@@ -741,6 +785,7 @@
   }
 
   .sectionHeading,
+  .payoutsSection,
   .dangerZone,
   .addressCard > header,
   .bioMeta {
@@ -760,6 +805,8 @@
   }
 
   .dangerZone > button,
+  .transactionActions,
+  .transactionActions > a,
   .addButton {
     inline-size: 100%;
   }

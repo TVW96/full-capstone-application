@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
@@ -116,6 +117,7 @@ export class ListingsService {
             listingId,
             sellerId,
           },
+          lock: { mode: "pessimistic_write" },
           relations: {
             listingItems: {
               inventoryItem: true,
@@ -125,6 +127,12 @@ export class ListingsService {
 
         if (!listing) {
           throw new NotFoundException("Listing not found.");
+        }
+
+        if (listing.status !== ListingStatus.ACTIVE) {
+          throw new ConflictException(
+            "Reserved, sold, or cancelled listings cannot be changed.",
+          );
         }
 
         if (listing.listingItems.length <= 1) {

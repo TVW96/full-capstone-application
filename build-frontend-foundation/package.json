@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build --webpack",
+    "build:netlify": "node scripts/netlify-build.mjs",
     "start": "next start --port 3000",
     "lint": "eslint"
   },

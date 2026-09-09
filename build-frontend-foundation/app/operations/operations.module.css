@@ -1,0 +1,34 @@
+.page { min-block-size: calc(100vb - 8rem); background: var(--sys-color-canvas); }
+.page > header { padding: var(--space-7) var(--layout-gutter); color: var(--sys-color-on-utility); background: var(--sys-color-utility-deep); }
+.page > header > *, .content { inline-size: min(100%, 78rem); margin-inline: auto; }
+.page > header p, .queueHeading p { margin: 0; color: var(--ref-color-evergreen-200); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); letter-spacing: .11em; text-transform: uppercase; }
+.page > header h1 { margin: var(--space-1) 0 var(--space-2); color: inherit; }
+.page > header span { color: var(--sys-color-on-utility-muted); }
+.content { display: grid; gap: var(--space-4); padding: var(--space-5) var(--layout-gutter) var(--space-8); }
+.error, .warning { padding: var(--space-3); color: var(--sys-color-on-danger-container); background: var(--sys-color-danger-container); border-radius: var(--sys-radius-sm); }
+.locationSetup, .queue { padding: var(--space-5); background: var(--sys-color-surface); border: 1px solid var(--sys-color-border); border-radius: var(--sys-radius-md); box-shadow: var(--sys-shadow-sm); }
+.locationSetup summary { color: var(--sys-color-primary); font-weight: var(--font-weight-bold); cursor: pointer; }
+.locationSetup form { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); margin-block-start: var(--space-4); }
+.locationSetup label { display: grid; gap: var(--space-1); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); }
+.locationSetup input, .actionForm input, .actionForm select, .verificationActions input { min-block-size: 2.75rem; padding-inline: var(--space-3); color: var(--sys-color-text); background: var(--sys-color-surface); border: 1px solid var(--sys-color-border-strong); border-radius: var(--sys-radius-sm); }
+.locationSetup button, .queue button { min-block-size: 2.75rem; padding: var(--space-2) var(--space-4); color: var(--sys-color-on-primary); background: var(--sys-color-primary); border: 1px solid var(--sys-color-primary); border-radius: var(--sys-radius-sm); font-weight: var(--font-weight-bold); cursor: pointer; }
+.locationSetup button { align-self: end; }
+.queueHeading, .queue article > header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); }
+.queueHeading p { color: var(--sys-color-primary); }
+.queueHeading h2, .queue article h3, .queue article header p { margin: 0; }
+.grid { display: grid; gap: var(--space-4); margin-block-start: var(--space-4); }
+.grid article { padding: var(--space-4); border: 1px solid var(--sys-color-border); border-radius: var(--sys-radius-sm); }
+.queue article header p { color: var(--sys-color-text-subtle); font-size: var(--font-size-xs); }
+.queue article header > span { padding: var(--space-1) var(--space-3); color: var(--sys-color-on-primary-container); background: var(--sys-color-primary-container); border-radius: var(--sys-radius-full); font-size: var(--font-size-xs); font-weight: var(--font-weight-bold); text-transform: capitalize; }
+.queue article dl { display: grid; grid-template-columns: repeat(4, 1fr); margin-block: var(--space-4); border-block: 1px solid var(--sys-color-border); }
+.queue article dl div { min-inline-size: 0; padding: var(--space-3); }
+.queue article dt { color: var(--sys-color-text-subtle); font-size: var(--font-size-xs); text-transform: uppercase; }
+.queue article dd { overflow-wrap: anywhere; margin: var(--space-1) 0 0; }
+.actionForm, .verificationActions, .verificationActions form { display: flex; gap: var(--space-2); }
+.actionForm input, .actionForm select, .verificationActions input { flex: 1; }
+.verificationActions { align-items: stretch; }
+.verificationActions form { flex: 1; }
+.primaryAction { inline-size: 100%; }
+.warning { margin-block-end: 0; }
+@media (max-width: 56rem) { .locationSetup form, .queue article dl { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 40rem) { .locationSetup form, .queue article dl { grid-template-columns: 1fr; } .queueHeading, .queue article > header, .actionForm, .verificationActions, .verificationActions form { flex-direction: column; } .queue button, .locationSetup button { inline-size: 100%; } }

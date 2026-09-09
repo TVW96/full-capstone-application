@@ -1,3 +1,7 @@
+x-backend-env: &backend-env
+  env_file:
+    - ./.env
+
 services:
   postgres:
     image: postgres:15
@@ -22,50 +26,23 @@ services:
       retries: 5
 
   migrate:
+    <<: *backend-env
     build:
       context: ./build-backend-foundation
       target: final
-    environment:
-      DATABASE_TARGET: ${DATABASE_TARGET:-local}
-      DB_HOST: ${DB_HOST:-postgres}
-      DB_PORT: ${DB_PORT:-5432}
-      DB_USERNAME: ${DB_USERNAME:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
-      DB_NAME: ${DB_NAME:-manga_marketplace}
-      DATABASE_URL: ${DATABASE_URL:-}
-      MIGRATION_DATABASE_URL: ${MIGRATION_DATABASE_URL:-}
-      DATABASE_SSL_CA: ${DATABASE_SSL_CA:-}
-      DATABASE_SSL_CA_FILE: ${DATABASE_SSL_CA_FILE:-}
     command: ["npm", "run", "migration:run:compiled"]
     depends_on:
       postgres:
         condition: service_healthy
 
   nestjs:
+    <<: *backend-env
     build:
       context: ./build-backend-foundation
       target: final
     container_name: manga-marketplace-api
-    environment:
-      NODE_ENV: production
-      PORT: 3001
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:${FRONTEND_PORT:-3000},http://127.0.0.1:${FRONTEND_PORT:-3000}}
-      DATABASE_TARGET: ${DATABASE_TARGET:-local}
-      DB_HOST: ${DB_HOST:-postgres}
-      DB_PORT: ${DB_PORT:-5432}
-      DB_USERNAME: ${DB_USERNAME:-postgres}
-      DB_PASSWORD: ${DB_PASSWORD:-postgres}
-      DB_NAME: ${DB_NAME:-manga_marketplace}
-      DB_POOL_SIZE: ${DB_POOL_SIZE:-5}
-      DB_CONNECT_TIMEOUT_MS: ${DB_CONNECT_TIMEOUT_MS:-10000}
-      DATABASE_URL: ${DATABASE_URL:-}
-      MIGRATION_DATABASE_URL: ${MIGRATION_DATABASE_URL:-}
-      DATABASE_SSL_CA: ${DATABASE_SSL_CA:-}
-      DATABASE_SSL_CA_FILE: ${DATABASE_SSL_CA_FILE:-}
-      SUPABASE_URL: ${SUPABASE_URL:-}
-      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-}
-    ports:
-      - "${API_PORT:-3001}:3001"
+    expose:
+      - "3001"
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -87,13 +64,35 @@ services:
     build:
       context: ./build-frontend-foundation
       args:
-        NEXT_PUBLIC_BACKEND_API_URL: ${NEXT_PUBLIC_BACKEND_API_URL:-http://localhost:3001}
+        NEXT_PUBLIC_BACKEND_API_URL: ${NEXT_PUBLIC_BACKEND_API_URL:-/api}
     container_name: manga-marketplace-web
     ports:
       - "${FRONTEND_PORT:-3000}:80"
     depends_on:
       nestjs:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend-build:
+    build:
+      context: ./build-frontend-foundation
+      target: build-runner
+      args:
+        NEXT_PUBLIC_BACKEND_API_URL: ${NEXT_PUBLIC_BACKEND_API_URL:-/api}
+    command: ["npm", "run", "build"]
+    profiles: ["build"]
+
+  backend-build:
+    <<: *backend-env
+    build:
+      context: ./build-backend-foundation
+      target: build-runner
+    command: ["npm", "run", "build"]
+    profiles: ["build"]
 
 volumes:
   manga-marketplace-data:

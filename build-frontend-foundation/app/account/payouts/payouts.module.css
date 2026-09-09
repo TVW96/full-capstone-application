@@ -1,0 +1,242 @@
+.page {
+  min-block-size: calc(100vb - 8rem);
+  background: var(--sys-color-canvas);
+}
+
+.hero {
+  padding: var(--space-7) var(--layout-gutter);
+  color: var(--sys-color-on-utility);
+  background: var(--sys-color-utility-deep);
+}
+
+.hero > *,
+.content {
+  inline-size: min(100%, 72rem);
+  margin-inline: auto;
+}
+
+.hero p,
+.connection p,
+.heading p {
+  margin-block: 0 var(--space-1);
+  color: var(--ref-color-evergreen-200);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin-block: 0 var(--space-2);
+  color: inherit;
+  font-size: var(--font-size-3xl);
+}
+
+.hero span {
+  color: var(--sys-color-on-utility-muted);
+}
+
+.content {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--layout-gutter) var(--space-8);
+}
+
+.back {
+  color: var(--sys-color-primary);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.notice,
+.error {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-inline-start: 0.25rem solid var(--sys-color-primary);
+}
+
+.notice {
+  background: var(--sys-color-primary-container);
+}
+
+.error {
+  color: var(--sys-color-on-danger-container);
+  background: var(--sys-color-danger-container);
+  border-color: var(--sys-color-danger);
+}
+
+.connection,
+.orders {
+  padding: var(--space-5);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-md);
+  box-shadow: var(--sys-shadow-sm);
+}
+
+.connection,
+.heading,
+.orderCard header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.connection p,
+.heading p {
+  color: var(--sys-color-primary);
+}
+
+.connection h2,
+.heading h2 {
+  margin: 0 0 var(--space-2);
+}
+
+.connection span {
+  color: var(--sys-color-text-muted);
+}
+
+.connection button,
+.heading button,
+.shipmentForm button {
+  min-block-size: 2.8rem;
+  padding: var(--space-2) var(--space-4);
+  color: var(--sys-color-on-primary);
+  background: var(--sys-color-primary);
+  border: 1px solid var(--sys-color-primary);
+  border-radius: var(--sys-radius-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.heading button {
+  color: var(--sys-color-primary);
+  background: transparent;
+}
+
+.connection button:disabled,
+.heading button:disabled,
+.shipmentForm button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.orderGrid {
+  display: grid;
+  gap: var(--space-4);
+  margin-block-start: var(--space-4);
+}
+
+.orderCard {
+  padding: var(--space-4);
+  border: 1px solid var(--sys-color-border);
+  border-radius: var(--sys-radius-sm);
+}
+
+.orderCard header p,
+.orderCard h3 {
+  margin: 0;
+}
+
+.orderCard header p {
+  color: var(--sys-color-text-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.orderCard header > span {
+  padding: var(--space-1) var(--space-3);
+  color: var(--sys-color-on-primary-container);
+  background: var(--sys-color-primary-container);
+  border-radius: var(--sys-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
+}
+
+.orderCard dl {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-block: var(--space-4);
+  border-block: 1px solid var(--sys-color-border);
+}
+
+.orderCard dl div {
+  padding: var(--space-3);
+}
+
+.orderCard dt {
+  color: var(--sys-color-text-subtle);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+}
+
+.orderCard dd {
+  margin: var(--space-1) 0 0;
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
+}
+
+.orderCard address {
+  margin-block: var(--space-3);
+  color: var(--sys-color-text-muted);
+  font-style: normal;
+  line-height: var(--line-height-body);
+}
+
+.shipmentForm {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr auto;
+  align-items: end;
+  gap: var(--space-3);
+  margin-block-start: var(--space-4);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--sys-color-border);
+}
+
+.shipmentForm label {
+  display: grid;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.shipmentForm input {
+  min-block-size: 2.8rem;
+  padding-inline: var(--space-3);
+  color: var(--sys-color-text);
+  background: var(--sys-color-surface);
+  border: 1px solid var(--sys-color-border-strong);
+  border-radius: var(--sys-radius-sm);
+}
+
+.shipmentForm p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--sys-color-danger);
+}
+
+.tracking {
+  margin-block: var(--space-2) 0;
+  color: var(--sys-color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 48rem) {
+  .connection,
+  .heading,
+  .orderCard header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .connection button,
+  .heading button {
+    inline-size: 100%;
+  }
+
+  .orderCard dl,
+  .shipmentForm {
+    grid-template-columns: 1fr;
+  }
+}

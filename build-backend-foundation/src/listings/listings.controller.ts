@@ -7,6 +7,7 @@ import {
   Post,
   Headers,
   ForbiddenException,
+  ConflictException,
 } from "@nestjs/common";
 
 import { CreateListingDto } from "./dto/create-listing.dto";
@@ -31,6 +32,16 @@ export class ListingsController {
     );
     if (sellerId !== user.userId)
       throw new ForbiddenException("You may only create your own listings.");
+    if (
+      !user.stripeConnectedAccountId ||
+      !user.stripeDetailsSubmitted ||
+      !user.stripeTransfersEnabled ||
+      !user.stripePayoutsEnabled
+    ) {
+      throw new ConflictException(
+        "Complete Stripe seller onboarding before publishing a listing.",
+      );
+    }
     return this.listingsService.create(user.userId, createListingDto);
   }
 

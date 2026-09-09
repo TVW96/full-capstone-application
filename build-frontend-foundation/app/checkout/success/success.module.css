@@ -5,6 +5,7 @@
 .main h1 { margin: 0; font-size: var(--font-size-2xl); letter-spacing: -.045em; }
 .main h1 + p { color: var(--sys-color-text-muted); }
 .reference { font-family: var(--font-family-mono); font-size: var(--font-size-xs); }
+.error { padding: var(--space-3); color: var(--sys-color-on-danger-container); background: var(--sys-color-danger-container); border-radius: var(--sys-radius-sm); }
 .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-block-start: var(--space-5); }
 .actions a { padding: .75rem 1rem; color: var(--sys-color-on-primary); background: var(--sys-color-primary); border-radius: var(--sys-radius-sm); font-weight: 750; text-decoration: none; }
 .actions a:last-child { color: var(--sys-color-primary); background: transparent; border: 1px solid var(--sys-color-primary); }

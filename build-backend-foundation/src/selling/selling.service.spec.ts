@@ -62,7 +62,13 @@ function setup() {
   };
   const database = { transaction: jest.fn(async (work) => work(manager)) };
   const users = {
-    requireAuthenticatedUser: jest.fn().mockResolvedValue({ userId: sellerId }),
+    requireAuthenticatedUser: jest.fn().mockResolvedValue({
+      userId: sellerId,
+      stripeConnectedAccountId: "acct_seller",
+      stripeDetailsSubmitted: true,
+      stripeTransfersEnabled: true,
+      stripePayoutsEnabled: true,
+    }),
   };
   const media = {
     validateMarketplacePhoto: jest.fn(),

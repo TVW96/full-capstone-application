@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+import { readSession } from "@/app/account/_lib/client-api";
 import { useCart } from "@/components/CartProvider";
 import styles from "./cart.module.css";
 
@@ -21,9 +22,14 @@ export default function CartPageClient() {
   const checkout = async () => {
     setSubmitting(true); setError("");
     try {
+      const session = readSession();
+      if (!session) throw new Error("Sign in before starting checkout so the protected order can be tied to your account.");
       const response = await fetch(`${apiBaseUrl}/payments/checkout-session`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.token}`,
+        },
         body: JSON.stringify({ listingIds: items.map((item) => item.listingId), ...(email ? { customerEmail: email } : {}) }),
       });
       const payload = await response.json() as { url?: string; message?: string | string[] };
@@ -51,7 +57,7 @@ export default function CartPageClient() {
           <label htmlFor="receipt-email">Receipt email <span>optional</span></label><input id="receipt-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="reader@example.com" />
           <button className={styles.checkout} type="button" disabled={submitting} onClick={checkout}>{submitting ? "Opening secure checkout…" : "Continue to Stripe"}<span aria-hidden="true">→</span></button>
           {error && <p className={styles.error} role="alert">{error}</p>}
-          <p className={styles.secure}>Secure payment, address collection, and shipping selection are handled by Stripe.</p>
+          <p className={styles.secure}>Stripe securely collects payment. Seller funds are released only after hub verification and outbound carrier handoff.</p>
         </aside>
       </div>}
   </main>;
